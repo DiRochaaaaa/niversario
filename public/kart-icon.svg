@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <!-- Base do Kart -->
+  <path d="M15,65 L85,65 L80,75 L20,75 Z" fill="#22c55e" />
+  
+  <!-- Corpo do Kart -->
+  <rect x="25" y="55" width="50" height="10" rx="3" fill="#22c55e" />
+  
+  <!-- Volante -->
+  <circle cx="50" cy="45" r="5" stroke="#ffffff" stroke-width="2" fill="none" />
+  <line x1="50" y1="45" x2="50" y2="55" stroke="#ffffff" stroke-width="2" />
+  
+  <!-- Rodas -->
+  <circle cx="25" cy="80" r="10" fill="#333333" stroke="#ffffff" stroke-width="2" />
+  <circle cx="75" cy="80" r="10" fill="#333333" stroke="#ffffff" stroke-width="2" />
+  
+  <!-- Detalhe da roda (aro) -->
+  <circle cx="25" cy="80" r="5" fill="none" stroke="#ffffff" stroke-width="1" />
+  <circle cx="75" cy="80" r="5" fill="none" stroke="#ffffff" stroke-width="1" />
+  
+  <!-- Aerofólio traseiro -->
+  <path d="M70,50 L85,40 L85,50 L70,55 Z" fill="#22c55e" />
+  
+  <!-- Assentos -->
+  <rect x="35" y="48" width="30" height="7" rx="2" fill="#111111" />
+  
+  <!-- Detalhes do capacete do piloto -->
+  <circle cx="50" cy="40" r="6" fill="#ff4d4d" />
+</svg> 
