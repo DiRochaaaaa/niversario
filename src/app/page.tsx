@@ -7,9 +7,10 @@ import CommentForm from "@/components/CommentForm"
 import CommentsList from "@/components/CommentsList"
 import { BirthdayBalloons } from "@/components/BirthdayBalloons"
 import { ConfirmationBalloons, setConfirmationBalloonsInstance } from "@/components/ConfirmationBalloons"
-import { CheckCircle2, MapPin, ExternalLink, Calendar, Clock, AlertCircle, ChevronDown, ChevronUp, Info, User, Map, Check, MessageCircle } from 'lucide-react'
+import { CheckCircle2, MapPin, ExternalLink, Calendar, Clock, AlertCircle, ChevronDown, ChevronUp, Info, User, Map, Check, MessageCircle, Loader2, Users } from 'lucide-react'
 import { TextShimmer } from '@/components/ui/text-shimmer'
 import Image from 'next/image'
+import { supabase } from '@/lib/supabase'
 
 // Forçar renderização dinâmica para evitar problemas de pré-renderização com o Supabase
 export const dynamic = 'force-dynamic'
@@ -19,6 +20,8 @@ export default function Home() {
   const [refreshCommentsKey, setRefreshCommentsKey] = useState(0)
   const [loaded, setLoaded] = useState(false)
   const [showKartInfo, setShowKartInfo] = useState(false)
+  const [confirmations, setConfirmations] = useState<any[]>([])
+  const [loadingStats, setLoadingStats] = useState(true)
   const confirmationBalloonsRef = useRef<{ launchConfirmationBalloons: () => void } | null>(null);
 
   useEffect(() => {
@@ -28,7 +31,26 @@ export default function Home() {
     if (confirmationBalloonsRef.current) {
       setConfirmationBalloonsInstance(confirmationBalloonsRef.current);
     }
-  }, [])
+
+    // Carregar confirmações para estatísticas
+    fetchConfirmations()
+  }, [refreshKey])
+
+  const fetchConfirmations = async () => {
+    setLoadingStats(true)
+    const { data, error } = await supabase
+      .from('confirmations')
+      .select('*')
+
+    if (!error && data) {
+      setConfirmations(data)
+    }
+    setLoadingStats(false)
+  }
+
+  const getVaiAndarCount = () => {
+    return confirmations.filter(c => c.vai_andar).length;
+  }
 
   const handleNewConfirmation = () => {
     setRefreshKey(prev => prev + 1)
@@ -43,8 +65,11 @@ export default function Home() {
   }, [])
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-white px-4 pb-16">
-      <div className="max-w-4xl mx-auto">
+    <main className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-white px-4 md:px-8 pb-16 relative">
+      {/* Background com padrão de quadrados */}
+      <div className="absolute inset-0 bg-grid-pattern opacity-20"></div>
+      
+      <div className="max-w-6xl mx-auto relative z-10">
         {/* Header com gradiente */}
         <div className={`py-10 md:py-16 text-center relative ${loaded ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationDelay: '0.1s' }}>
           <div className="absolute inset-0 bg-gradient-to-r from-green-900/20 via-green-500/20 to-green-900/20 blur-xl"></div>
@@ -59,7 +84,7 @@ export default function Home() {
               
             </TextShimmer>
             <div className="w-24 h-1 bg-gradient-to-r from-green-400 to-green-600 mx-auto mb-6"></div>
-            <p className="text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
               Venha comemorar meu aniversário com uma emocionante <span className="text-green-400 font-semibold">corrida de kart</span>!
             </p>
             
@@ -76,6 +101,46 @@ export default function Home() {
             alt="Vamos andar de kart junto no meu aniversário!" 
             className="w-full h-auto object-cover rounded-xl"
           />
+        </div>
+
+        {/* Estatísticas de confirmações */}
+        <div className={`mb-10 ${loaded ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationDelay: '0.18s' }}>
+          <div className="relative bg-gray-800/80 backdrop-blur p-4 rounded-xl border border-gray-700 shadow-xl">
+            <div className="absolute -inset-px bg-gradient-to-r from-green-500/30 to-green-400/20 rounded-xl blur opacity-30"></div>
+            <div className="relative">
+              <div className="grid grid-cols-2 gap-6 px-4">
+                <div className="text-center p-3 bg-gray-700/50 rounded-lg border border-gray-600">
+                  <p className="text-sm text-gray-300 mb-1">Total confirmado</p>
+                  {loadingStats ? (
+                    <div className="flex justify-center">
+                      <Loader2 className="h-6 w-6 text-green-400 animate-spin" />
+                    </div>
+                  ) : (
+                    <div className="flex items-center justify-center gap-2">
+                      <Users className="h-5 w-5 text-green-400" />
+                      <p className="text-2xl font-bold text-white">{confirmations.length}</p>
+                      <p className="text-sm text-gray-400">pessoas</p>
+                    </div>
+                  )}
+                </div>
+                
+                <div className="text-center p-3 bg-gray-700/50 rounded-lg border border-gray-600">
+                  <p className="text-sm text-gray-300 mb-1">Pilotos confirmados</p>
+                  {loadingStats ? (
+                    <div className="flex justify-center">
+                      <Loader2 className="h-6 w-6 text-green-400 animate-spin" />
+                    </div>
+                  ) : (
+                    <div className="flex items-center justify-center gap-2">
+                      <span className="text-xl">🏎️</span>
+                      <p className="text-2xl font-bold text-white">{getVaiAndarCount()}</p>
+                      <p className="text-sm text-gray-400">pilotos</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Informações do evento */}
@@ -197,7 +262,7 @@ export default function Home() {
                   showKartInfo ? 'max-h-[1500px] opacity-100' : 'max-h-0 opacity-0'
                 }`}
               >
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div className="grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 gap-4 mb-6">
                   <div className="bg-gray-700/50 p-5 rounded-lg">
                     <h3 className="text-lg font-semibold text-green-400 mb-3">Localização e Horários</h3>
                     <ul className="space-y-2">
@@ -272,10 +337,10 @@ export default function Home() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
-          <div className={`md:col-span-3 ${loaded ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationDelay: '0.5s' }}>
+          <div className={`md:col-span-2 ${loaded ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationDelay: '0.5s' }}>
             <ConfirmationForm onSuccess={handleNewConfirmation} />
           </div>
-          <div className={`md:col-span-2 ${loaded ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationDelay: '0.6s' }}>
+          <div className={`md:col-span-3 ${loaded ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationDelay: '0.6s' }}>
             <ConfirmationsList key={refreshKey} />
           </div>
         </div>
@@ -304,7 +369,7 @@ export default function Home() {
           </div>
           <p className="text-gray-400 text-sm">Esperamos você lá! 🏎️</p>
         </div>
-    </div>
+      </div>
       
       {/* Componente de balões invisível para celebrar as confirmações */}
       <ConfirmationBalloons ref={confirmationBalloonsRef} />

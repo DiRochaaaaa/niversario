@@ -24,7 +24,7 @@ export default function ConfirmationsList() {
       return
     }
 
-    setConfirmations(data || [])
+    setConfirmations(data as Confirmation[] || [])
     setLoading(false)
   }
 
@@ -98,9 +98,6 @@ export default function ConfirmationsList() {
                   <div className="flex flex-wrap gap-2 ml-11 sm:ml-0">
                     {getKartBadge(confirmation.vai_andar)}
                     {getInterestBadge(confirmation.nivel_interesse)}
-                    <div className="bg-green-600/60 text-white text-xs px-2 py-1 rounded-full">
-                      Confirmado
-                    </div>
                   </div>
                 </div>
               ))}
