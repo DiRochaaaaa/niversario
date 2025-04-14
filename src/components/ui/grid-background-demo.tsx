@@ -1,3 +1,5 @@
+"use client"
+
 import { GridBackground } from "@/components/ui/grid-background"
 import { useState } from "react"
 
