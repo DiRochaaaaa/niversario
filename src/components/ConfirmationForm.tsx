@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { supabase } from "@/lib/supabase"
-import { Send, UserCheck, Loader2, AlertCircle } from 'lucide-react'
+import { Send, UserCheck, Loader2, AlertCircle, Calendar } from 'lucide-react'
 import { launchConfirmationBalloons } from '@/components/ConfirmationBalloons'
 
 export default function ConfirmationForm({ onSuccess }: { onSuccess: () => void }) {
@@ -76,9 +76,9 @@ export default function ConfirmationForm({ onSuccess }: { onSuccess: () => void 
           <h2 className="text-2xl font-semibold text-white">Confirme sua presença</h2>
         </div>
         
-        <div className="mb-6 bg-amber-900/30 border border-amber-800 text-amber-300 px-4 py-3 rounded-lg text-sm flex items-center">
-          <AlertCircle className="h-4 w-4 mr-2 flex-shrink-0" />
-          <p>A data e horário exatos serão informados em breve. Confirme seu interesse para receber atualizações!</p>
+        <div className="mb-6 bg-green-900/30 border border-green-800 text-green-300 px-4 py-3 rounded-lg text-sm flex items-center">
+          <Calendar className="h-4 w-4 mr-2 flex-shrink-0" />
+          <p>O evento será realizado no dia 10 de maio (sábado). O horário será definido em breve!</p>
         </div>
         
         <form onSubmit={handleSubmit} className="space-y-5">

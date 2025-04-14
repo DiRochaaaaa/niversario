@@ -84,8 +84,8 @@ export default function Home() {
             {
               icon: <Calendar className="h-6 w-6 text-green-400" />,
               title: "Data",
-              content: <div className="flex items-center justify-center"><AlertCircle className="h-4 w-4 text-amber-400 mr-2" /> <span>Pendente</span></div>,
-              subtext: "Será definida em breve",
+              content: "10 de Maio",
+              subtext: "Sábado",
               delay: "0.2s"
             },
             {

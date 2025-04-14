@@ -5,7 +5,7 @@ Site para confirmação de presença no aniversário de kart do Diego no Kart At
 ## Detalhes do Evento
 
 **Status**: 
-- **Data**: ⚠️ Pendente (será definida em breve)
+- **Data**: 10 de maio de 2024 (sábado)
 - **Horário**: ⚠️ Pendente (será definido em breve)
 
 **Local**: Kart Atrium
