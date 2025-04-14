@@ -4,12 +4,28 @@ import { createClient } from '@supabase/supabase-js'
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
 
-// Criando o cliente apenas se as variáveis de ambiente estiverem disponíveis
-let supabase: ReturnType<typeof createClient> | null = null;
+// Criando um mock do cliente para uso quando as variáveis não estiverem disponíveis
+const mockClient = {
+  from: () => ({
+    select: () => ({
+      order: () => ({
+        data: [],
+        error: null
+      })
+    }),
+    insert: () => ({
+      data: null,
+      error: new Error('Supabase não está disponível durante o build')
+    })
+  })
+} as any;
+
+// Criando o cliente - usa o mock quando necessário
+let supabase: ReturnType<typeof createClient>;
 
 // Verificar se estamos em um ambiente de servidor e se as variáveis estão disponíveis
 if (typeof window !== 'undefined' && supabaseUrl && supabaseAnonKey) {
-  // Criando cliente com configurações para evitar conexões WebSocket
+  // Criando cliente real com configurações para evitar conexões WebSocket
   supabase = createClient(supabaseUrl, supabaseAnonKey, {
     auth: {
       persistSession: true
@@ -20,26 +36,13 @@ if (typeof window !== 'undefined' && supabaseUrl && supabaseAnonKey) {
     }
   })
 } else {
-  // Durante o build ou SSG, criamos um cliente vazio para evitar erros
+  // Durante o build ou SSG, usamos o cliente mock
   if (process.env.NODE_ENV === 'production' && process.env.NEXT_PHASE === 'phase-production-build') {
-    console.warn('Supabase client não inicializado durante o build. As variáveis de ambiente serão necessárias em runtime.')
+    console.warn('Supabase client mock usado durante o build. As variáveis de ambiente serão necessárias em runtime.')
   }
   
-  // Criar um mock do cliente para evitar erros durante o build
-  supabase = {
-    from: () => ({
-      select: () => ({
-        order: () => ({
-          data: [],
-          error: null
-        })
-      }),
-      insert: () => ({
-        data: null,
-        error: new Error('Supabase não está disponível durante o build')
-      })
-    })
-  } as any;
+  // Usar o mock
+  supabase = mockClient;
 }
 
 export { supabase } 
