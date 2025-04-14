@@ -11,6 +11,7 @@ import { CheckCircle2, MapPin, ExternalLink, Calendar, Clock, AlertCircle, Chevr
 import { TextShimmer } from '@/components/ui/text-shimmer'
 import Image from 'next/image'
 import { supabase } from '@/lib/supabase'
+import MiniKartButton from "@/components/miniKart/MiniKartButton"
 
 // Forçar renderização dinâmica para evitar problemas de pré-renderização com o Supabase
 export const dynamic = 'force-dynamic'
@@ -375,6 +376,9 @@ export default function Home() {
       
       {/* Componente de balões invisível para celebrar as confirmações */}
       <ConfirmationBalloons ref={confirmationBalloonsRef} />
+      
+      {/* Mini Jogo de Kart */}
+      <MiniKartButton />
     </main>
   )
 }

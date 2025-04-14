@@ -1,0 +1,371 @@
+.gameContainer {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 400px;
+  height: 80vh;
+  max-height: 650px;
+  background-color: rgba(16, 20, 28, 0.98);
+  border-radius: 12px;
+  border: 2px solid #22c55e;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translate(-50%, -40%);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background-color: #111827;
+  border-bottom: 1px solid #22c55e;
+}
+
+.header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #22c55e;
+  font-weight: 600;
+}
+
+.closeButton {
+  background: transparent;
+  border: none;
+  color: #9ca3af;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.closeButton:hover {
+  color: #f3f4f6;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.gameArea {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background-color: #1a1e29;
+}
+
+/* Estilo para pista de corrida */
+.raceTrack {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #1a1e29;
+  background-image: 
+    repeating-linear-gradient(
+      to bottom,
+      #22c55e20 0px,
+      #22c55e20 10px,
+      transparent 10px,
+      transparent 20px
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      #22c55e10 0px,
+      #22c55e10 30px,
+      transparent 30px,
+      transparent 60px
+    );
+  background-size: 100% 20px, 100% 60px;
+  animation: trackScroll 0.8s linear infinite;
+}
+
+@keyframes trackScroll {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 60px;
+  }
+}
+
+/* Estilo para o kart */
+.kart {
+  position: absolute;
+  width: 40px;
+  height: 60px;
+  margin-left: -20px;
+  margin-top: -30px;
+  transform-origin: center bottom;
+  transition: transform 0.1s ease-out;
+  z-index: 10;
+}
+
+.kartBody {
+  position: absolute;
+  width: 24px;
+  height: 36px;
+  background-color: #22c55e;
+  left: 8px;
+  top: 12px;
+  border-radius: 4px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.5);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+/* Cockpit do kart */
+.kartBody:after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background-color: #0f172a;
+  border-radius: 50%;
+  left: 4px;
+  top: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.kartWheelTL {
+  position: absolute;
+  width: 6px;
+  height: 10px;
+  background-color: #0f172a;
+  left: 7px;
+  top: 15px;
+  border-radius: 2px;
+}
+
+.kartWheelTR {
+  position: absolute;
+  width: 6px;
+  height: 10px;
+  background-color: #0f172a;
+  right: 7px;
+  top: 15px;
+  border-radius: 2px;
+}
+
+.kartWheelBL {
+  position: absolute;
+  width: 6px;
+  height: 10px;
+  background-color: #0f172a;
+  left: 7px;
+  bottom: 15px;
+  border-radius: 2px;
+}
+
+.kartWheelBR {
+  position: absolute;
+  width: 6px;
+  height: 10px;
+  background-color: #0f172a;
+  right: 7px;
+  bottom: 15px;
+  border-radius: 2px;
+}
+
+/* Estilo para os obstáculos */
+.obstacle {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  margin-left: -15px;
+  margin-top: -15px;
+  z-index: 5;
+}
+
+.coneBody {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-bottom: 30px solid #ef4444;
+  left: 0;
+  bottom: 0;
+  position: relative;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.6);
+}
+
+.coneBody::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 6px;
+  background-color: white;
+  left: -10px;
+  top: 10px;
+}
+
+.coneBody::before {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 6px;
+  background-color: white;
+  left: -8px;
+  top: 20px;
+}
+
+/* Estilo para o menu inicial/final */
+.menuScreen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: rgba(16, 20, 28, 0.9);
+  color: white;
+  text-align: center;
+}
+
+.menuScreen h2 {
+  font-size: 1.8rem;
+  color: #22c55e;
+  margin-bottom: 10px;
+}
+
+.startButton {
+  background-color: #22c55e;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  margin: 15px 0;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.startButton:hover {
+  background-color: #16a34a;
+}
+
+.errorMessage {
+  background-color: rgba(239, 68, 68, 0.2);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  border-radius: 8px;
+  padding: 12px;
+  margin: 15px 0;
+  max-width: 280px;
+}
+
+.instructions {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 15px;
+  max-width: 280px;
+  text-align: left;
+}
+
+.instructions p {
+  margin-top: 0;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.instructions ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.instructions li {
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+  color: #d1d5db;
+}
+
+/* Controles do jogo */
+.gameControls {
+  padding: 12px;
+  background-color: #111827;
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.controlButton {
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.controlButton:hover {
+  background-color: #dc2626;
+}
+
+/* Score no jogo */
+.scoreDisplay {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: 1px solid rgba(34, 197, 94, 0.5);
+}
+
+/* Controles de toque para dispositivos sem giroscópio */
+.touchControls {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+.touchButton {
+  width: 60px;
+  height: 60px;
+  background-color: rgba(34, 197, 94, 0.5);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  color: white;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.touchButton:active {
+  background-color: rgba(34, 197, 94, 0.8);
+  transform: scale(1.1);
+} 
