@@ -7,8 +7,9 @@ import CommentForm from "@/components/CommentForm"
 import CommentsList from "@/components/CommentsList"
 import { BirthdayBalloons } from "@/components/BirthdayBalloons"
 import { ConfirmationBalloons, setConfirmationBalloonsInstance } from "@/components/ConfirmationBalloons"
-import { CheckCircle2, MapPin, ExternalLink, Calendar, Clock, AlertCircle, ImageIcon, ChevronDown, ChevronUp, Info } from 'lucide-react'
+import { CheckCircle2, MapPin, ExternalLink, Calendar, Clock, AlertCircle, ChevronDown, ChevronUp, Info, User, Map, Check, MessageCircle } from 'lucide-react'
 import { TextShimmer } from '@/components/ui/text-shimmer'
+import Image from 'next/image'
 
 export default function Home() {
   const [refreshKey, setRefreshKey] = useState(0)

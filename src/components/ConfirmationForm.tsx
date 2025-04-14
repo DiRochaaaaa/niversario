@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { supabase } from "@/lib/supabase"
-import { Send, UserCheck, Loader2, Flag, ThumbsUp, AlertCircle } from 'lucide-react'
+import { Send, UserCheck, Loader2, AlertCircle } from 'lucide-react'
 import { launchConfirmationBalloons } from '@/components/ConfirmationBalloons'
 
 export default function ConfirmationForm({ onSuccess }: { onSuccess: () => void }) {

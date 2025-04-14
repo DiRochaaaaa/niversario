@@ -5,7 +5,11 @@ export interface ConfirmationBalloonsHandle {
   launchConfirmationBalloons: () => void;
 }
 
-export const ConfirmationBalloons = forwardRef<ConfirmationBalloonsHandle, {}>(
+interface ConfirmationBalloonsProps {
+  // You can add props here if needed in the future
+}
+
+export const ConfirmationBalloons = forwardRef<ConfirmationBalloonsHandle, ConfirmationBalloonsProps>(
   (props, ref) => {
     const balloonsRef = useRef<{ launchAnimation: () => void } | null>(null)
     const [isMobile, setIsMobile] = useState(false)

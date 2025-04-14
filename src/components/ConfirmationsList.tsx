@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { supabase } from "@/lib/supabase"
 import type { Confirmation } from '@/types/supabase'
-import { Users, Loader2, UserCheck2, Flag, ThumbsUp, ThumbsDown } from 'lucide-react'
+import { Users, Loader2, UserCheck2 } from 'lucide-react'
 
 export default function ConfirmationsList() {
   const [confirmations, setConfirmations] = useState<Confirmation[]>([])
