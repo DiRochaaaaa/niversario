@@ -105,36 +105,36 @@ export default function Home() {
 
         {/* Estatísticas de confirmações */}
         <div className={`mb-10 ${loaded ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationDelay: '0.18s' }}>
-          <div className="relative bg-gray-800/80 backdrop-blur p-4 rounded-xl border border-gray-700 shadow-xl">
+          <div className="relative bg-gray-800/80 backdrop-blur p-3 sm:p-4 rounded-xl border border-gray-700 shadow-xl">
             <div className="absolute -inset-px bg-gradient-to-r from-green-500/30 to-green-400/20 rounded-xl blur opacity-30"></div>
             <div className="relative">
-              <div className="grid grid-cols-2 gap-6 px-4">
-                <div className="text-center p-3 bg-gray-700/50 rounded-lg border border-gray-600">
-                  <p className="text-sm text-gray-300 mb-1">Total confirmado</p>
+              <div className="grid grid-cols-2 gap-3 sm:gap-6 px-2 sm:px-4">
+                <div className="text-center p-2 sm:p-3 bg-gray-700/50 rounded-lg border border-gray-600">
+                  <p className="text-xs sm:text-sm text-gray-300 mb-1">Total confirmado</p>
                   {loadingStats ? (
                     <div className="flex justify-center">
-                      <Loader2 className="h-6 w-6 text-green-400 animate-spin" />
+                      <Loader2 className="h-5 w-5 sm:h-6 sm:w-6 text-green-400 animate-spin" />
                     </div>
                   ) : (
-                    <div className="flex items-center justify-center gap-2">
-                      <Users className="h-5 w-5 text-green-400" />
-                      <p className="text-2xl font-bold text-white">{confirmations.length}</p>
-                      <p className="text-sm text-gray-400">pessoas</p>
+                    <div className="flex items-center justify-center gap-1 sm:gap-2">
+                      <Users className="h-4 w-4 sm:h-5 sm:w-5 text-green-400" />
+                      <p className="text-xl sm:text-2xl font-bold text-white">{confirmations.length}</p>
+                      <p className="text-xs sm:text-sm text-gray-400">pessoas</p>
                     </div>
                   )}
                 </div>
                 
-                <div className="text-center p-3 bg-gray-700/50 rounded-lg border border-gray-600">
-                  <p className="text-sm text-gray-300 mb-1">Pilotos confirmados</p>
+                <div className="text-center p-2 sm:p-3 bg-gray-700/50 rounded-lg border border-gray-600">
+                  <p className="text-xs sm:text-sm text-gray-300 mb-1">Pilotos confirmados</p>
                   {loadingStats ? (
                     <div className="flex justify-center">
-                      <Loader2 className="h-6 w-6 text-green-400 animate-spin" />
+                      <Loader2 className="h-5 w-5 sm:h-6 sm:w-6 text-green-400 animate-spin" />
                     </div>
                   ) : (
-                    <div className="flex items-center justify-center gap-2">
-                      <span className="text-xl">🏎️</span>
-                      <p className="text-2xl font-bold text-white">{getVaiAndarCount()}</p>
-                      <p className="text-sm text-gray-400">pilotos</p>
+                    <div className="flex items-center justify-center gap-1 sm:gap-2">
+                      <span className="text-base sm:text-xl">🏎️</span>
+                      <p className="text-xl sm:text-2xl font-bold text-white">{getVaiAndarCount()}</p>
+                      <p className="text-xs sm:text-sm text-gray-400">pilotos</p>
                     </div>
                   )}
                 </div>
@@ -144,45 +144,47 @@ export default function Home() {
         </div>
 
         {/* Informações do evento */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+        <div className="grid grid-cols-3 gap-2 sm:gap-6 mb-10">
           {[
             {
-              icon: <Calendar className="h-6 w-6 text-green-400" />,
+              icon: <Calendar className="h-5 w-5 sm:h-6 sm:w-6 text-green-400" />,
               title: "Data",
               content: "10 de Maio",
               subtext: "Sábado",
               delay: "0.2s"
             },
             {
-              icon: <Clock className="h-6 w-6 text-green-400" />,
+              icon: <Clock className="h-5 w-5 sm:h-6 sm:w-6 text-green-400" />,
               title: "Horário",
-              content: <div className="flex items-center justify-center"><AlertCircle className="h-4 w-4 text-amber-400 mr-2" /> <span>Pendente</span></div>,
-              subtext: "Será definido em breve",
+              content: <div className="flex items-center justify-center"><AlertCircle className="h-4 w-4 text-amber-400 mr-1" /> <span>Pendente</span></div>,
+              subtext: "Em breve",
               delay: "0.3s"
             },
             {
               icon: (
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 sm:h-6 sm:w-6 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
               ),
               title: "Local",
-              content: "Kartódromo Kart Atrium",
+              content: "Kart Atrium",
               delay: "0.4s"
             }
           ].map((item, index) => (
             <div 
-              key={index} 
-              className={`bg-gray-800/80 backdrop-blur p-6 rounded-xl border border-gray-700 flex flex-col items-center kart-shadow transform transition-all duration-300 hover:scale-[1.02] ${loaded ? 'animate-fade-in' : 'opacity-0'}`} 
+              key={index}
+              className={`relative bg-gray-800/80 backdrop-blur p-3 sm:p-6 rounded-lg border border-gray-700 shadow-lg transform transition-all duration-200 hover:scale-[1.02] text-center ${loaded ? 'animate-fade-in' : 'opacity-0'}`}
               style={{ animationDelay: item.delay }}
             >
-              <div className="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center mb-3">
-                {item.icon}
+              <div className="flex flex-col items-center">
+                <div className="mb-1 sm:mb-3">{item.icon}</div>
+                <h3 className="text-xs sm:text-sm font-medium text-gray-300 mb-1">{item.title}</h3>
+                <div className="text-sm sm:text-xl font-semibold text-white">{item.content}</div>
+                {item.subtext && (
+                  <p className="text-[10px] sm:text-xs text-gray-400 mt-1">{item.subtext}</p>
+                )}
               </div>
-              <h3 className="text-lg font-semibold mb-1 text-green-400">{item.title}</h3>
-              <div className="text-center text-gray-300">{item.content}</div>
-              {item.subtext && <p className="text-xs text-gray-400 mt-1">{item.subtext}</p>}
             </div>
           ))}
         </div>
