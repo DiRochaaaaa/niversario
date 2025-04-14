@@ -11,6 +11,9 @@ import { CheckCircle2, MapPin, ExternalLink, Calendar, Clock, AlertCircle, Chevr
 import { TextShimmer } from '@/components/ui/text-shimmer'
 import Image from 'next/image'
 
+// Forçar renderização dinâmica para evitar problemas de pré-renderização com o Supabase
+export const dynamic = 'force-dynamic'
+
 export default function Home() {
   const [refreshKey, setRefreshKey] = useState(0)
   const [refreshCommentsKey, setRefreshCommentsKey] = useState(0)

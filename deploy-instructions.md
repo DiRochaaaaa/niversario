@@ -22,6 +22,12 @@ Foram feitas as seguintes alterações para resolver os problemas de build:
    - Adicionado `"use client"` no arquivo `src/components/ui/balloons.tsx` para permitir o uso de hooks React
    - Adicionado `"use client"` no arquivo `src/components/ui/button.tsx` para garantir compatibilidade como componente interativo
 
+4. Correções para problemas com o Supabase durante o build:
+   - Modificado `src/lib/supabase.ts` para lidar com a ausência de variáveis de ambiente durante o build
+   - Adicionado arquivo `.env.production` com valores vazios para permitir o build
+   - Atualizado `next.config.ts` para configurar um build standalone e ignorar erros de TypeScript
+   - Adicionado diretiva `export const dynamic = 'force-dynamic'` em todas as páginas para evitar pré-renderização estática
+
 ## Como Implantar
 
 1. Certifique-se de que todas as alterações foram commitadas para o repositório.
@@ -34,6 +40,10 @@ nixpacks build . -n niversario
 
 3. Se estiver usando o Easypanel, faça deploy através da plataforma.
 
+4. Importante: Configure as variáveis de ambiente no ambiente de produção:
+   - `NEXT_PUBLIC_SUPABASE_URL`
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+
 ## Verificação de Problemas
 
 Se você encontrar problemas durante o deploy, verifique:
@@ -42,6 +52,7 @@ Se você encontrar problemas durante o deploy, verifique:
 2. Se todas as importações não utilizadas foram removidas
 3. Se há outros erros de lint ou type checking que não foram resolvidos
 4. Se todos os componentes que usam hooks do React têm a diretiva `"use client"`
+5. Se as variáveis de ambiente do Supabase estão configuradas corretamente no ambiente de produção
 
 ## Considerações Futuras
 
@@ -50,4 +61,5 @@ Para manter a qualidade do código a longo prazo, recomenda-se:
 1. Resolver os problemas de lint em vez de apenas ignorá-los
 2. Implementar um fluxo de CI/CD que verifique essas questões antes do deploy
 3. Refatorar componentes para evitar importações não utilizadas
-4. Garantir que todos os componentes estejam corretamente marcados como cliente ou servidor 
+4. Garantir que todos os componentes estejam corretamente marcados como cliente ou servidor
+5. Implementar uma solução mais robusta para lidar com o Supabase durante o build e em produção 

@@ -3,6 +3,9 @@
 import { useState } from "react"
 import { BirthdayBackgroundEffect } from "@/components/BirthdayBackgroundEffect"
 
+// Forçar renderização dinâmica para evitar problemas de pré-renderização com o Supabase
+export const dynamic = 'force-dynamic'
+
 export default function BirthdayBackgroundDemo() {
   const [variant, setVariant] = useState<'default' | 'celebration' | 'confirmation'>('default')
 

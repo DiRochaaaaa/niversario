@@ -3,6 +3,9 @@
 import { GridBackground } from "@/components/ui/grid-background"
 import { useState } from "react"
 
+// Forçar renderização dinâmica para evitar problemas de pré-renderização com o Supabase
+export const dynamic = 'force-dynamic'
+
 export default function LandingDemo() {
   const [email, setEmail] = useState("")
   
