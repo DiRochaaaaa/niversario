@@ -57,25 +57,27 @@ let supabase: ReturnType<typeof createClient>;
 
 // Verificar se estamos em um ambiente de servidor e se as variáveis estão disponíveis
 if (typeof window !== 'undefined' && supabaseUrl && supabaseAnonKey) {
-  // Criando cliente real com configurações para evitar conexões WebSocket
-  supabase = createClient(supabaseUrl, supabaseAnonKey, {
-    auth: {
-      persistSession: true
-    },
-    global: {
-      // Desabilitando completamente os recursos que dependem de WebSockets
-      fetch: (...args) => fetch(...args)
-    }
-  })
-} else {
-  // Durante o build ou SSG, usamos o cliente mock
-  if (process.env.NODE_ENV === 'production' && process.env.NEXT_PHASE === 'phase-production-build') {
-    console.warn('Supabase client mock usado durante o build. As variáveis de ambiente serão necessárias em runtime.')
-  } else if (typeof window !== 'undefined') {
-    console.warn('Usando cliente Supabase mock. Os dados não serão salvos permanentemente.')
-  }
+  console.log('=== Supabase Client Debug ===');
+  console.log('Using real Supabase client');
+  console.log('URL:', supabaseUrl);
+  console.log('Key starts with:', supabaseAnonKey.substring(0, 20) + '...');
   
-  // Usar o mock
+  try {
+    supabase = createClient(supabaseUrl, supabaseAnonKey, {
+      auth: { persistSession: true },
+      global: { fetch: (...args) => fetch(...args) }
+    });
+    console.log('Supabase client created successfully');
+  } catch (error) {
+    console.error('Error creating Supabase client:', error);
+    supabase = mockClient;
+  }
+} else {
+  console.warn('=== Supabase Client Debug ===');
+  console.warn('Using mock client because:');
+  console.warn('- window exists:', typeof window !== 'undefined');
+  console.warn('- has URL:', !!supabaseUrl);
+  console.warn('- has key:', !!supabaseAnonKey);
   supabase = mockClient;
 }
 
