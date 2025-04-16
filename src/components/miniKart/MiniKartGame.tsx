@@ -128,7 +128,7 @@ export default function MiniKartGame({ onClose }: { onClose: () => void }) {
       window.removeEventListener('deviceorientation', handleDeviceOrientation)
     }
   }, [])
-  
+
   // Atualizar tamanho da área de jogo quando o componente montar ou redimensionar
   useEffect(() => {
     const updateGameAreaSize = () => {
@@ -160,7 +160,7 @@ export default function MiniKartGame({ onClose }: { onClose: () => void }) {
     };
     
     window.addEventListener('resize', handleResize);
-    
+
     return () => {
       window.removeEventListener('resize', handleResize);
     };
@@ -797,19 +797,19 @@ export default function MiniKartGame({ onClose }: { onClose: () => void }) {
         )
       } else {
         // Mobile sem giroscópio
-      return (
-        <>
+        return (
+          <>
             <p>Use os botões na tela para mover o kart!</p>
-          <div className={styles.instructions}>
-            <p>Como jogar:</p>
-            <ul>
-                <li>Toque nos botões ◀ e ▶ para controlar o kart</li>
-                <li>Desvie dos cones na pista</li>
-              <li>A cada obstáculo que você passar, ganha 1 ponto</li>
+            <div className={styles.instructions}>
+              <p>Como jogar:</p>
+              <ul>
+                <li>Toque nos botões de seta para controlar o kart</li>
+                <li>Desvie dos pneus na pista</li>
+                <li>A cada obstáculo que você passar, ganha 1 ponto</li>
                 <li>Toque na tela para iniciar</li>
-            </ul>
-          </div>
-        </>
+              </ul>
+            </div>
+          </>
         )
       }
     } else {
@@ -839,6 +839,44 @@ export default function MiniKartGame({ onClose }: { onClose: () => void }) {
       startGame()
     }
   }
+
+  // Touch controls for mobile
+  const renderTouchControls = () => {
+    return (
+      <div className={styles.touchControls}>
+        <button
+          className={styles.touchButton}
+          onTouchStart={() => keysRef.current.left = true} 
+          onTouchEnd={() => keysRef.current.left = false}
+        >
+          <svg 
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24" 
+            className={styles.arrowIcon} 
+            fill="none" 
+            stroke="currentColor"
+          >
+            <polyline points="15,18 9,12 15,6" />
+          </svg>
+        </button>
+        <button
+          className={styles.touchButton}
+          onTouchStart={() => keysRef.current.right = true} 
+          onTouchEnd={() => keysRef.current.right = false}
+        >
+          <svg 
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24" 
+            className={styles.arrowIcon} 
+            fill="none" 
+            stroke="currentColor"
+          >
+            <polyline points="9,6 15,12 9,18" />
+          </svg>
+        </button>
+      </div>
+    );
+  };
 
   // ===== RENDERIZAÇÃO =====
   return (
@@ -940,24 +978,7 @@ export default function MiniKartGame({ onClose }: { onClose: () => void }) {
       )}
       
       {/* Controles na tela para dispositivos móveis sem giroscópio */}
-      {isPlaying && isMobile && !hasGyroscope && (
-        <div className={styles.touchControls}>
-          <button 
-            className={styles.touchButton}
-            onTouchStart={() => { keysRef.current.left = true }}
-            onTouchEnd={() => { keysRef.current.left = false }}
-          >
-            ◀
-          </button>
-          <button 
-            className={styles.touchButton}
-            onTouchStart={() => { keysRef.current.right = true }}
-            onTouchEnd={() => { keysRef.current.right = false }}
-          >
-            ▶
-          </button>
-        </div>
-      )}
+      {isPlaying && isMobile && !hasGyroscope && renderTouchControls()}
     </div>
   )
 } 
