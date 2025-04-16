@@ -118,7 +118,7 @@ export default function MiniKartGame({ onClose }: { onClose: () => void }) {
     if (savedHighScore) {
       setHighScore(parseInt(savedHighScore, 10))
     }
-    
+
     // Limpar quando o componente for desmontado
     return () => {
       if (animationFrameRef.current) {
@@ -152,7 +152,7 @@ export default function MiniKartGame({ onClose }: { onClose: () => void }) {
       window.removeEventListener('resize', updateGameAreaSize)
     }
   }, [])
-  
+
   // Adicionar listener de redimensionamento para atualizar dimensões do jogo em tempo real
   useEffect(() => {
     const handleResize = () => {
@@ -362,7 +362,7 @@ export default function MiniKartGame({ onClose }: { onClose: () => void }) {
       cancelAnimationFrame(animationFrameRef.current)
       animationFrameRef.current = 0
     }
-    
+
     // Atualizar high score se necessário
     if (scoreRef.current > highScore) {
       setHighScore(scoreRef.current)
@@ -752,12 +752,12 @@ export default function MiniKartGame({ onClose }: { onClose: () => void }) {
     
     // Ativar esta linha para depuração visual das hitboxes
     // debugRenderHitboxes([kartHitbox, ...obstacleHitboxes], gameArea);
-    
+
     // Verificar colisão com cada obstáculo
     for (const obstacleHitbox of obstacleHitboxes) {
       const collision = checkAABBCollision(kartHitbox, obstacleHitbox);
-      
-      if (collision) {
+
+    if (collision) {
         // Aplicar efeito de colisão no obstáculo
         obstacleHitbox.element.classList.add(styles.tireHit);
         
@@ -797,19 +797,19 @@ export default function MiniKartGame({ onClose }: { onClose: () => void }) {
         )
       } else {
         // Mobile sem giroscópio
-        return (
-          <>
+      return (
+        <>
             <p>Use os botões na tela para mover o kart!</p>
-            <div className={styles.instructions}>
-              <p>Como jogar:</p>
-              <ul>
+          <div className={styles.instructions}>
+            <p>Como jogar:</p>
+            <ul>
                 <li>Toque nos botões ◀ e ▶ para controlar o kart</li>
                 <li>Desvie dos cones na pista</li>
-                <li>A cada obstáculo que você passar, ganha 1 ponto</li>
+              <li>A cada obstáculo que você passar, ganha 1 ponto</li>
                 <li>Toque na tela para iniciar</li>
-              </ul>
-            </div>
-          </>
+            </ul>
+          </div>
+        </>
         )
       }
     } else {
@@ -898,8 +898,8 @@ export default function MiniKartGame({ onClose }: { onClose: () => void }) {
             <button onClick={startGame} className={styles.startButton}>
               Jogar novamente
             </button>
-          </div>
-        )}
+              </div>
+            )}
         
         {/* Tela inicial */}
         {!isPlaying && !gameOver && (
@@ -912,9 +912,9 @@ export default function MiniKartGame({ onClose }: { onClose: () => void }) {
             
             {Instructions}
             
-            <button onClick={startGame} className={styles.startButton}>
-              Iniciar corrida
-            </button>
+                <button onClick={startGame} className={styles.startButton}>
+                  Iniciar corrida
+                </button>
             
             {/* Botão especial para permissão de giroscópio no iOS */}
             {isMobile && needsGyroscopePermission && !hasGyroscope && (
@@ -929,7 +929,7 @@ export default function MiniKartGame({ onClose }: { onClose: () => void }) {
           </div>
         )}
       </div>
-      
+
       {/* Botão para terminar o jogo */}
       {isPlaying && (
         <div className={styles.gameControls}>
