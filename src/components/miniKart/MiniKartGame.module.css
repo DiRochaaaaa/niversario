@@ -1,112 +1,233 @@
+/* Variáveis CSS para tema e design tokens */
+:root {
+  /* Paleta de cores do tema verde */
+  --green-50: #f0fdf4;
+  --green-100: #dcfce7;
+  --green-200: #bbf7d0;
+  --green-300: #86efac;
+  --green-400: #4ade80;
+  --green-500: #22c55e;
+  --green-600: #16a34a;
+  --green-700: #15803d;
+  --green-800: #166534;
+  --green-900: #14532d;
+  
+  /* Cores de UI */
+  --bg-primary: rgba(16, 20, 28, 0.98);
+  --bg-secondary: #111827;
+  --bg-track: #1a1e29;
+  --text-primary: #ffffff;
+  --text-secondary: #d1d5db;
+  --text-muted: #9ca3af;
+  
+  /* Cores para o kart */
+  --kart-body: linear-gradient(to bottom, var(--green-400), var(--green-600));
+  --kart-cockpit: #0f172a;
+  --kart-wheel: #0f172a;
+  
+  /* Cores para pneus (obstáculos) */
+  --tire-color: #1e1e1e;
+  --tire-stripe: #3a3a3a;
+  --tire-rim: #777777;
+  
+  /* Sombras */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  
+  /* Dimensões */
+  --container-width: 90%;
+  --container-max-width: 400px;
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  --border-radius-xl: 16px;
+  
+  /* Animações */
+  --transition-fast: 0.15s ease-out;
+  --transition-normal: 0.25s ease-out;
+  --transition-slow: 0.4s ease-out;
+}
+
+/* Container principal do jogo */
 .gameContainer {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 90%;
-  max-width: 400px;
+  width: var(--container-width);
+  max-width: var(--container-max-width);
   height: 80vh;
   max-height: 650px;
-  background-color: rgba(16, 20, 28, 0.98);
-  border-radius: 12px;
-  border: 2px solid #22c55e;
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+  background-color: var(--bg-primary);
+  border-radius: var(--border-radius-lg);
+  border: 2px solid var(--green-500);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.7), 
+              0 0 15px rgba(34, 197, 94, 0.3);
   overflow: hidden;
   display: flex;
   flex-direction: column;
   z-index: 100;
-  animation: slideIn 0.3s ease-out;
+  animation: slideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @keyframes slideIn {
   0% {
     transform: translate(-50%, -40%);
     opacity: 0;
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0), 0 0 0 rgba(34, 197, 94, 0);
   }
   100% {
     transform: translate(-50%, -50%);
     opacity: 1;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.7), 0 0 15px rgba(34, 197, 94, 0.3);
   }
 }
 
+/* Cabeçalho do jogo */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 12px 16px;
-  background-color: #111827;
-  border-bottom: 1px solid #22c55e;
+  background-color: var(--bg-secondary);
+  border-bottom: 1px solid var(--green-500);
+  position: relative;
+  overflow: hidden;
+}
+
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, 
+    rgba(34, 197, 94, 0) 0%, 
+    rgba(34, 197, 94, 0.7) 50%, 
+    rgba(34, 197, 94, 0) 100%);
+  animation: glowBorder 2s ease-in-out infinite;
+}
+
+@keyframes glowBorder {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
 }
 
 .header h2 {
   margin: 0;
   font-size: 1.25rem;
-  color: #22c55e;
+  color: var(--green-500);
   font-weight: 600;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  letter-spacing: 0.5px;
 }
 
 .closeButton {
   background: transparent;
   border: none;
-  color: #9ca3af;
+  color: var(--text-muted);
   cursor: pointer;
-  padding: 4px;
+  padding: 8px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s;
+  transition: all var(--transition-fast);
 }
 
 .closeButton:hover {
-  color: #f3f4f6;
+  color: var(--text-primary);
   background-color: rgba(255, 255, 255, 0.1);
+  transform: rotate(90deg);
 }
 
+/* Área principal do jogo */
 .gameArea {
   flex: 1;
   position: relative;
   overflow: hidden;
-  background-color: #1a1e29;
+  background-color: var(--bg-track);
 }
 
-/* Estilo para pista de corrida */
+/* Pista de corrida com efeito parallax */
 .raceTrack {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #1a1e29;
+  background-color: var(--bg-track);
   background-image: 
-    repeating-linear-gradient(
-      to bottom,
-      #22c55e20 0px,
-      #22c55e20 10px,
-      transparent 10px,
-      transparent 20px
+    /* Linhas laterais da pista */
+    linear-gradient(
+      to right,
+      transparent 20%,
+      rgba(34, 197, 94, 0.2) 20%,
+      rgba(34, 197, 94, 0.2) 21%,
+      transparent 21%
     ),
+    linear-gradient(
+      to right,
+      transparent 79%,
+      rgba(34, 197, 94, 0.2) 79%,
+      rgba(34, 197, 94, 0.2) 80%,
+      transparent 80%
+    ),
+    /* Linhas tracejadas centrais */
     repeating-linear-gradient(
       to bottom,
-      #22c55e10 0px,
-      #22c55e10 30px,
+      rgba(34, 197, 94, 0.2) 0px,
+      rgba(34, 197, 94, 0.2) 10px,
+      transparent 10px,
+      transparent 30px
+    ),
+    /* Faixas de movimento */
+    repeating-linear-gradient(
+      to bottom,
+      rgba(34, 197, 94, 0.05) 0px,
+      rgba(34, 197, 94, 0.05) 30px,
       transparent 30px,
       transparent 60px
     );
-  background-size: 100% 20px, 100% 60px;
+  background-size: 100% 100%, 100% 100%, 2px 40px, 100% 60px;
+  background-position: 0 0, 0 0, 50% 0, 0 0;
   animation: trackScroll 0.8s linear infinite;
 }
 
 @keyframes trackScroll {
   0% {
-    background-position: 0 0;
+    background-position: 0 0, 0 0, 50% 0, 0 0;
   }
   100% {
-    background-position: 0 60px;
+    background-position: 0 0, 0 0, 50% 60px, 0 60px;
   }
 }
 
-/* Estilo para o kart */
+/* Efeito de iluminação nas bordas da pista */
+.raceTrack::before, .raceTrack::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 20%;
+  pointer-events: none;
+}
+
+.raceTrack::before {
+  left: 20%;
+  box-shadow: inset 3px 0 5px rgba(34, 197, 94, 0.1);
+}
+
+.raceTrack::after {
+  right: 20%;
+  box-shadow: inset -3px 0 5px rgba(34, 197, 94, 0.1);
+}
+
+/* ===== KART STYLING ===== */
+/* Container do kart com efeitos de animação */
 .kart {
   position: absolute;
   width: 40px;
@@ -114,120 +235,179 @@
   margin-left: -20px;
   margin-top: -30px;
   transform-origin: center bottom;
-  transition: transform 0.1s ease-out;
   z-index: 10;
+  transition: transform var(--transition-fast);
+  animation: kartHover 2s ease-in-out infinite;
 }
 
+@keyframes kartHover {
+  0%, 100% { transform: translateY(0) rotate(var(--rotation, 0deg)); }
+  50% { transform: translateY(-2px) rotate(var(--rotation, 0deg)); }
+}
+
+/* Corpo do kart com gradiente e sombras */
 .kartBody {
   position: absolute;
-  width: 24px;
-  height: 36px;
-  background-color: #22c55e;
-  left: 8px;
-  top: 12px;
-  border-radius: 4px;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.5);
+  width: 26px;
+  height: 40px;
+  background: var(--kart-body);
+  left: 7px;
+  top: 10px;
+  border-radius: 6px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5), 
+              inset 0 -2px 2px rgba(0, 0, 0, 0.3),
+              inset 0 2px 2px rgba(255, 255, 255, 0.3);
   border: 2px solid rgba(255, 255, 255, 0.5);
+  transition: all var(--transition-fast);
+  transform-style: preserve-3d;
+  perspective: 800px;
 }
 
 /* Cockpit do kart */
 .kartBody:after {
   content: '';
   position: absolute;
-  width: 16px;
-  height: 16px;
-  background-color: #0f172a;
+  width: 18px;
+  height: 18px;
+  background: radial-gradient(circle at 30% 30%, rgba(34, 197, 94, 0.2), var(--kart-cockpit));
   border-radius: 50%;
   left: 4px;
-  top: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  top: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.8);
 }
 
-.kartWheelTL {
+/* Rodas do kart com efeitos de profundidade */
+.kartWheelTL, .kartWheelTR, .kartWheelBL, .kartWheelBR {
   position: absolute;
-  width: 6px;
-  height: 10px;
-  background-color: #0f172a;
-  left: 7px;
+  width: 8px;
+  height: 12px;
+  background-color: var(--kart-wheel);
+  border-radius: 3px;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.6), inset 0 -1px 1px rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  transform-style: preserve-3d;
+  transition: all var(--transition-fast);
+}
+
+/* Posicionamento das rodas */
+.kartWheelTL {
+  left: 5px;
   top: 15px;
-  border-radius: 2px;
+  animation: wheelRotate 0.5s linear infinite;
 }
 
 .kartWheelTR {
-  position: absolute;
-  width: 6px;
-  height: 10px;
-  background-color: #0f172a;
-  right: 7px;
+  right: 5px;
   top: 15px;
-  border-radius: 2px;
+  animation: wheelRotate 0.5s linear infinite;
 }
 
 .kartWheelBL {
-  position: absolute;
-  width: 6px;
-  height: 10px;
-  background-color: #0f172a;
-  left: 7px;
+  left: 5px;
   bottom: 15px;
-  border-radius: 2px;
+  animation: wheelRotate 0.5s linear infinite;
 }
 
 .kartWheelBR {
-  position: absolute;
-  width: 6px;
-  height: 10px;
-  background-color: #0f172a;
-  right: 7px;
+  right: 5px;
   bottom: 15px;
-  border-radius: 2px;
+  animation: wheelRotate 0.5s linear infinite;
 }
 
-/* Estilo para os obstáculos */
-.obstacle {
-  position: absolute;
-  width: 30px;
-  height: 30px;
-  margin-left: -15px;
-  margin-top: -15px;
-  z-index: 5;
+@keyframes wheelRotate {
+  0% { transform: translateZ(0); }
+  100% { transform: translateZ(0); }
 }
 
-.coneBody {
-  position: absolute;
-  width: 0;
-  height: 0;
-  border-left: 15px solid transparent;
-  border-right: 15px solid transparent;
-  border-bottom: 30px solid #ef4444;
-  left: 0;
-  bottom: 0;
-  position: relative;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.6);
-}
-
-.coneBody::after {
+/* Detalhes adicionais do kart - Farol */
+.kartBody::before {
   content: '';
   position: absolute;
-  width: 20px;
-  height: 6px;
-  background-color: white;
-  left: -10px;
-  top: 10px;
+  width: 4px;
+  height: 2px;
+  background-color: #fbbf24;
+  border-radius: 2px;
+  left: 11px;
+  bottom: 2px;
+  box-shadow: 0 0 5px rgba(251, 191, 36, 0.8);
 }
 
+/* ===== OBSTÁCULOS (PNEUS) ===== */
+.obstacle {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  margin-left: -20px;
+  margin-top: -20px;
+  z-index: 5;
+  filter: drop-shadow(0 5px 6px rgba(0, 0, 0, 0.6));
+  transform-style: preserve-3d;
+  transition: transform 0.1s;
+}
+
+/* Pneu (corpo principal) */
+.coneBody {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #444, var(--tire-color));
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.8), 0 0 2px rgba(0, 0, 0, 0.8);
+  left: 2px;
+  top: 2px;
+  transform-origin: center center;
+  animation: tireRotation 1s linear infinite;
+  overflow: hidden;
+}
+
+/* Aro interno do pneu */
 .coneBody::before {
   content: '';
   position: absolute;
-  width: 16px;
-  height: 6px;
-  background-color: white;
-  left: -8px;
-  top: 20px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 40%, #aaa, var(--tire-rim));
+  top: 9px;
+  left: 9px;
+  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.5);
 }
 
-/* Estilo para o menu inicial/final */
-.menuScreen {
+/* Detalhes do pneu - sulcos */
+.coneBody::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-image: 
+    linear-gradient(0deg, transparent 45%, var(--tire-stripe) 45%, var(--tire-stripe) 55%, transparent 55%),
+    linear-gradient(90deg, transparent 45%, var(--tire-stripe) 45%, var(--tire-stripe) 55%, transparent 55%);
+  opacity: 0.4;
+}
+
+@keyframes tireRotation {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Classe para pneu batido (quando colidir) */
+.tireHit {
+  animation: tireWobble 0.5s ease-out;
+}
+
+@keyframes tireWobble {
+  0% { transform: scale(1) rotate(0); }
+  25% { transform: scale(1.1) rotate(-15deg); }
+  50% { transform: scale(0.9) rotate(10deg); }
+  75% { transform: scale(1.05) rotate(-5deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+
+/* ===== MENUS E OVERLAY ===== */
+/* Base para menus (inicial e game over) */
+.menuScreen, .gameOverScreen {
   position: absolute;
   top: 0;
   left: 0;
@@ -238,56 +418,113 @@
   align-items: center;
   justify-content: center;
   padding: 20px;
-  background-color: rgba(16, 20, 28, 0.9);
-  color: white;
+  background: radial-gradient(circle at center, 
+    rgba(22, 101, 52, 0.1) 0%, 
+    rgba(16, 20, 28, 0.95) 70%);
+  color: var(--text-primary);
   text-align: center;
+  z-index: 20;
+  animation: fadeIn 0.3s ease-out;
 }
 
-.menuScreen h2 {
-  font-size: 1.8rem;
-  color: #22c55e;
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.menuScreen h2, .gameOverScreen h2 {
+  font-size: 2rem;
+  color: var(--green-500);
   margin-bottom: 10px;
+  text-shadow: 0 2px 10px rgba(34, 197, 94, 0.4);
+  letter-spacing: 1px;
 }
 
+.gameOverScreen h2 {
+  color: #ef4444;
+  text-shadow: 0 2px 10px rgba(239, 68, 68, 0.4);
+  animation: pulseText 1.5s ease-in-out infinite;
+}
+
+@keyframes pulseText {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* Botões do jogo */
 .startButton {
-  background-color: #22c55e;
+  background: linear-gradient(to bottom, var(--green-400), var(--green-600));
   color: white;
   border: none;
-  padding: 12px 24px;
-  font-size: 1rem;
+  padding: 12px 28px;
+  font-size: 1.1rem;
   font-weight: 600;
-  border-radius: 8px;
+  border-radius: var(--border-radius-md);
   margin: 15px 0;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: all var(--transition-fast);
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.4), 
+              inset 0 1px 1px rgba(255, 255, 255, 0.4);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Efeito de brilho no botão */
+.startButton::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to bottom right, 
+    rgba(255, 255, 255, 0) 0%, 
+    rgba(255, 255, 255, 0) 40%, 
+    rgba(255, 255, 255, 0.4) 50%, 
+    rgba(255, 255, 255, 0) 60%, 
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(30deg);
+  transition: transform 0.5s;
+  pointer-events: none;
 }
 
 .startButton:hover {
-  background-color: #16a34a;
+  background: linear-gradient(to bottom, var(--green-500), var(--green-700));
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(22, 163, 74, 0.5);
 }
 
-.errorMessage {
-  background-color: rgba(239, 68, 68, 0.2);
-  border: 1px solid rgba(239, 68, 68, 0.4);
-  border-radius: 8px;
-  padding: 12px;
-  margin: 15px 0;
-  max-width: 280px;
+.startButton:hover::after {
+  transform: translateX(100%) rotate(30deg);
+  transition: transform 0.7s;
 }
 
+.startButton:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 8px rgba(22, 163, 74, 0.4);
+}
+
+/* Instruções do jogo */
 .instructions {
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  padding: 12px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--border-radius-md);
+  padding: 15px;
   margin-top: 15px;
   max-width: 280px;
   text-align: left;
+  backdrop-filter: blur(2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .instructions p {
   margin-top: 0;
   margin-bottom: 8px;
   font-weight: 600;
+  color: var(--green-400);
 }
 
 .instructions ul {
@@ -296,33 +533,50 @@
 }
 
 .instructions li {
-  margin-bottom: 5px;
+  margin-bottom: 8px;
   font-size: 0.9rem;
-  color: #d1d5db;
+  color: var(--text-secondary);
+  position: relative;
+}
+
+.instructions li::before {
+  content: '▸';
+  position: absolute;
+  left: -15px;
+  color: var(--green-500);
 }
 
 /* Controles do jogo */
 .gameControls {
   padding: 12px;
-  background-color: #111827;
+  background-color: var(--bg-secondary);
   display: flex;
   justify-content: center;
   border-top: 1px solid rgba(34, 197, 94, 0.3);
 }
 
 .controlButton {
-  background-color: #ef4444;
+  background: linear-gradient(to bottom, #ef4444, #b91c1c);
   color: white;
   border: none;
-  padding: 8px 16px;
+  padding: 10px 20px;
   font-size: 0.9rem;
-  border-radius: 6px;
+  font-weight: 600;
+  border-radius: var(--border-radius-md);
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: all var(--transition-fast);
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
 }
 
 .controlButton:hover {
-  background-color: #dc2626;
+  background: linear-gradient(to bottom, #dc2626, #991b1b);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.5);
+}
+
+.controlButton:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 4px rgba(239, 68, 68, 0.4);
 }
 
 /* Score no jogo */
@@ -330,44 +584,129 @@
   position: absolute;
   top: 10px;
   right: 10px;
-  background-color: rgba(0, 0, 0, 0.6);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.6));
   color: white;
-  padding: 6px 12px;
+  padding: 8px 15px;
   border-radius: 20px;
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: 600;
   border: 1px solid rgba(34, 197, 94, 0.5);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  min-width: 80px;
+  text-align: center;
+  z-index: 10;
 }
 
-/* Controles de toque para dispositivos móveis */
+.scoreDisplay::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), transparent);
+  pointer-events: none;
+  border-radius: 20px;
+}
+
+/* ===== CONTROLES MOBILE ===== */
 .touchControls {
   position: fixed;
-  bottom: 80px;
+  bottom: 100px;
   left: 0;
   right: 0;
   display: flex;
   justify-content: space-between;
-  padding: 0 20px;
+  padding: 0 30px;
   z-index: 50;
 }
 
 .touchButton {
-  width: 60px;
-  height: 60px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
-  background-color: rgba(34, 197, 94, 0.7);
-  border: 2px solid #fff;
+  background: linear-gradient(to bottom, rgba(34, 197, 94, 0.8), rgba(22, 163, 74, 0.8));
+  border: 2px solid rgba(255, 255, 255, 0.8);
   color: #fff;
-  font-size: 24px;
+  font-size: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
   -webkit-tap-highlight-color: transparent;
   user-select: none;
   touch-action: manipulation;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), 
+              inset 0 1px 1px rgba(255, 255, 255, 0.4);
+  transition: transform 0.1s, box-shadow 0.1s;
 }
 
 .touchButton:active {
-  background-color: rgba(34, 197, 94, 0.9);
-  transform: scale(1.1);
+  background: linear-gradient(to bottom, rgba(22, 163, 74, 0.9), rgba(21, 128, 61, 0.9));
+  transform: scale(1.1) translateY(4px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* ===== MEDIA QUERIES ===== */
+@media (max-width: 360px) {
+  .touchControls {
+    padding: 0 20px;
+    bottom: 85px;
+  }
+  
+  .touchButton {
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+  }
+  
+  .startButton {
+    padding: 10px 24px;
+    font-size: 1rem;
+  }
+  
+  .menuScreen h2, .gameOverScreen h2 {
+    font-size: 1.7rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .gameContainer {
+    --container-max-width: 450px;
+    max-height: 700px;
+  }
+}
+
+/* ===== ANIMAÇÕES DE COLISÃO E PONTUAÇÃO ===== */
+@keyframes collision {
+  0%, 100% { transform: translate(0, 0) rotate(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translate(-2px, 0) rotate(-1deg); }
+  20%, 40%, 60%, 80% { transform: translate(2px, 0) rotate(1deg); }
+}
+
+@keyframes scorePoint {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+/* Classe para flash de colisão (aplicada via JS) */
+.collisionFlash {
+  animation: collision 0.5s ease-in-out;
+}
+
+/* Classe para animação de ponto (aplicada via JS) */
+.scoreFlash {
+  animation: scorePoint 0.3s ease-in-out;
+}
+
+/* ===== EFEITOS DE PARTÍCULAS ===== */
+@keyframes particle {
+  0% { 
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  100% { 
+    transform: translate(var(--x, 0), var(--y, 20px)) scale(0);
+    opacity: 0;
+  }
 } 
